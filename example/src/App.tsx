@@ -1,31 +1,41 @@
-import * as React from 'react';
+import React, { useCallback, useState } from 'react';
+import { withTiming } from 'react-native-reanimated';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'rnutils';
+import {
+  ReView,
+  ReTouchableOpacity,
+  useCacheShareValue,
+  useColorStyle,
+  f1,
+  center,
+  ReText,
+  color,
+  fontSize,
+} from 'rnutils';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
-
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
-  }, []);
-
+  let [bg, setBg] = useState('red');
+  let cacheBg = useCacheShareValue(bg, (max) => {
+    'worklet';
+    return withTiming(max, { duration: 1000 });
+  });
+  let colors = useColorStyle(cacheBg);
+  let changeBg = useCallback(
+    () => setBg((b) => (b === 'red' ? 'blue' : 'red')),
+    []
+  );
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <ReView
+      style={[
+        f1,
+        // borderWidth('t', 1),
+        center,
+        colors.backgroundColor,
+      ]}
+    >
+      <ReTouchableOpacity activeOpacity={0.75} onPress={changeBg}>
+        <ReText style={[color('white'), fontSize(16)]}>Change Bg</ReText>
+      </ReTouchableOpacity>
+    </ReView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  box: {
-    width: 60,
-    height: 60,
-    marginVertical: 20,
-  },
-});

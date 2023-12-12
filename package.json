@@ -53,11 +53,13 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
+    "@babel/plugin-transform-export-namespace-from": "^7.23.4",
     "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.5.0",
     "@react-native/eslint-config": "^0.72.2",
     "@release-it/conventional-changelog": "^5.0.0",
     "@types/jest": "^28.1.2",
+    "@types/lodash": "^4.14.202",
     "@types/react": "~17.0.21",
     "@types/react-native": "0.70.0",
     "commitlint": "^17.0.2",
@@ -70,8 +72,9 @@
     "react": "18.2.0",
     "react-native": "0.72.6",
     "react-native-builder-bob": "^0.20.0",
+    "react-native-reanimated": "3.3.0",
     "release-it": "^15.0.0",
-    "typescript": "^5.0.2"
+    "typescript": "^5.3.3"
   },
   "resolutions": {
     "@types/react": "17.0.21"
@@ -159,5 +162,10 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "cacache": "^18.0.1",
+    "lodash": "^4.17.21",
+    "lru-cache": "^10.1.0"
   }
 }
