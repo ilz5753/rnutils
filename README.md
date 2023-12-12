@@ -45,7 +45,7 @@ yarn add @ilz5753/rnutils
 The library wraps common React Native components, providing animated versions that can be used interchangeably to enhance your application.
 
 ```ts
-import { ReView, ReText, ReTouchableOpacity } from '@ilz5753/@ilz5753/rnutils';
+import { ReView, ReText, ReTouchableOpacity } from '@ilz5753/rnutils';
 ```
 
 ### Animated Components Usage
@@ -160,5 +160,3 @@ Special thanks to all the contributors and the open-source community for their o
 ---
 
 For more detailed usage and API information, please refer to the individual files pertaining to components, hooks, and utilities you wish to employ.
-
-> This README covers a broad overview of RNUtils’ capabilities. For detailed API documentation and more specific examples for each utility, refer to the accompanying documentation provided in the library.
