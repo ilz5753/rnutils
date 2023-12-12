@@ -1,7 +1,7 @@
 import { capitalize } from 'lodash';
 import type { ColorValue, DimensionValue } from 'react-native';
 import { Platform } from 'react-native';
-import { getStyle } from './common';
+import { getStyle, type StyleKey } from './common';
 export const backgroundColor = (backgroundColor?: ColorValue) => ({
   backgroundColor,
 });
@@ -562,3 +562,4 @@ export const row = getStyle('fdr');
 export const pa = getStyle('pa');
 export const overlay1 = [pa, zIndex(1)];
 export const overlayMax = [pa, zIndex(10e12)];
+export type { StyleKey };

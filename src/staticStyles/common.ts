@@ -291,10 +291,10 @@ const CommonStyles = StyleSheet.create({
     objectFit: 'scale-down',
   },
 });
-type Key = keyof typeof CommonStyles | boolean;
-export const getStyle = (keys?: Key[] | Key) => {
+export type StyleKey = keyof typeof CommonStyles | boolean;
+export const getStyle = (keys?: StyleKey[] | StyleKey) => {
   let o: Record<string, any> = {};
-  let exe = (key: Key) => {
+  let exe = (key: StyleKey) => {
     if (isString(key)) o = { ...o, ...CommonStyles[key] };
   };
   if (keys)
