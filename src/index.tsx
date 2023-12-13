@@ -19,7 +19,7 @@ export {
   useDimensionSizes,
   useDimensionSizesStyle,
   useNumberSizes,
-  useNumberSizesStyle
+  useNumberSizesStyle,
 } from './dynamicStyles/reanimated';
 export type {
   CacheShareValue,
@@ -28,7 +28,7 @@ export type {
   DerivedDimension,
   DerivedNumber,
   StrNum,
-  TWorkletFn
+  TWorkletFn,
 } from './dynamicStyles/reanimated';
 export {
   Layout,
@@ -54,6 +54,7 @@ export {
   full,
   fw,
   gap,
+  getStyle,
   height,
   isAndroid,
   isIos,
@@ -89,13 +90,12 @@ export {
   tintColor,
   top,
   width,
-  zIndex
+  zIndex,
 } from './staticStyles/functions';
 export type {
   BorderOrSpace,
   BorderRadius,
   Shadow,
   ShadowOffset,
-  StyleKey
+  StyleKey,
 } from './staticStyles/functions';
-
