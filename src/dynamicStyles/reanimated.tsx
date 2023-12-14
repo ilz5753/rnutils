@@ -1,9 +1,9 @@
 import { isEqual, isFunction } from 'lodash';
 import React, {
   Component,
+  forwardRef,
   useEffect,
   type ComponentType,
-  forwardRef,
   type ForwardRefExoticComponent,
   type PropsWithoutRef,
   type RefAttributes,
@@ -30,9 +30,9 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
+  type AnimateProps,
   type DerivedValue,
   type SharedValue,
-  type AnimateProps,
 } from 'react-native-reanimated';
 export type CustomDimensionValue = number | `${number}%`;
 export type StrNum = string | number;
@@ -662,7 +662,7 @@ export function WithAnimated<T extends object>(
   }
   let _Component = isFunction(Comp) ? Class<T> : Comp;
   let Render = $(_Component) as any;
-  return forwardRef((props: Readonly<Animated.AnimateProps<T>>, ref) => (
+  return forwardRef<T, Readonly<AnimateProps<T>>>((props, ref) => (
     <Render {...{ layout: Layout, ...props, ref }} />
   ));
 }
