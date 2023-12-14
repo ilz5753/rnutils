@@ -1,5 +1,13 @@
 import { isEqual, isFunction } from 'lodash';
-import React, { Component, useEffect, type ComponentType } from 'react';
+import React, {
+  Component,
+  useEffect,
+  type ComponentType,
+  forwardRef,
+  type ForwardRefExoticComponent,
+  type PropsWithoutRef,
+  type RefAttributes,
+} from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -24,6 +32,7 @@ import Animated, {
   useSharedValue,
   type DerivedValue,
   type SharedValue,
+  type AnimateProps,
 } from 'react-native-reanimated';
 export type CustomDimensionValue = number | `${number}%`;
 export type StrNum = string | number;
@@ -642,7 +651,9 @@ export function useDimensionSizesStyle({
 const $ = Animated.createAnimatedComponent;
 export function WithAnimated<T extends object>(
   Comp: ComponentType<T>
-): React.FC<Animated.AnimateProps<T>> {
+): ForwardRefExoticComponent<
+  PropsWithoutRef<Readonly<AnimateProps<T>>> & RefAttributes<T>
+> {
   class Class<T> extends Component<T> {
     render = () => {
       let C = Comp as any;
@@ -651,9 +662,9 @@ export function WithAnimated<T extends object>(
   }
   let _Component = isFunction(Comp) ? Class<T> : Comp;
   let Render = $(_Component) as any;
-  return (props: Readonly<Animated.AnimateProps<T>>) => (
-    <Render {...{ layout: Layout, ...props }} />
-  );
+  return forwardRef((props: Readonly<Animated.AnimateProps<T>>, ref) => (
+    <Render {...{ layout: Layout, ...props, ref }} />
+  ));
 }
 export const ReView = WithAnimated(View);
 export const ReScrollView = WithAnimated(ScrollView);
