@@ -649,11 +649,7 @@ export function useDimensionSizesStyle({
 }
 
 const $ = Animated.createAnimatedComponent;
-export function WithAnimated<T extends object>(
-  Comp: ComponentType<T>
-): ForwardRefExoticComponent<
-  PropsWithoutRef<Readonly<AnimateProps<T>>> & RefAttributes<T>
-> {
+export function WithAnimated<T extends object>(Comp: ComponentType<T>) {
   class Class<T> extends Component<T> {
     render = () => {
       let C = Comp as any;
@@ -662,9 +658,9 @@ export function WithAnimated<T extends object>(
   }
   let _Component = isFunction(Comp) ? Class<T> : Comp;
   let Render = $(_Component) as any;
-  return forwardRef<T, Readonly<AnimateProps<T>>>((props, ref) => (
-    <Render {...{ layout: Layout, ...props, ref }} />
-  ));
+  return forwardRef<ComponentType<T>, Readonly<AnimateProps<T>>>(
+    (props, ref) => <Render {...{ layout: Layout, ...props, ref }} />
+  );
 }
 export const ReView = WithAnimated(View);
 export const ReScrollView = WithAnimated(ScrollView);
