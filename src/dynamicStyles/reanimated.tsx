@@ -4,9 +4,6 @@ import React, {
   forwardRef,
   useEffect,
   type ComponentType,
-  type ForwardRefExoticComponent,
-  type PropsWithoutRef,
-  type RefAttributes,
 } from 'react';
 import {
   ActivityIndicator,
