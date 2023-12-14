@@ -1,6 +1,6 @@
 {
   "name": "@ilz5753/rnutils",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "React Native Utils",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",

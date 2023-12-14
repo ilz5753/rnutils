@@ -1,10 +1,5 @@
 import { isEqual, isFunction } from 'lodash';
-import React, {
-  Component,
-  forwardRef,
-  useEffect,
-  type ComponentType,
-} from 'react';
+import React, { Component, useEffect, type ComponentType } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -21,7 +16,6 @@ import {
   type ColorValue,
 } from 'react-native';
 import Animated, {
-  Layout,
   interpolate,
   interpolateColor,
   useAnimatedStyle,
@@ -647,17 +641,18 @@ export function useDimensionSizesStyle({
 
 const $ = Animated.createAnimatedComponent;
 export function WithAnimated<T extends object>(Comp: ComponentType<T>) {
-  class Class<T> extends Component<T> {
+  type RT = Readonly<AnimateProps<T>>;
+  class WAC extends Component<T> {
     render = () => {
       let C = Comp as any;
       return <C {...this.props} />;
     };
   }
-  let _Component = isFunction(Comp) ? Class<T> : Comp;
-  let Render = $(_Component) as any;
-  return forwardRef<ComponentType<T>, Readonly<AnimateProps<T>>>(
-    (props, ref) => <Render {...{ layout: Layout, ...props, ref }} />
-  );
+  const AnimatedComponent = $(isFunction(Comp) ? WAC : Comp) as any;
+  class Res<T> extends Component<T> {
+    render = () => <AnimatedComponent {...this.props} />;
+  }
+  return Res<RT>;
 }
 export const ReView = WithAnimated(View);
 export const ReScrollView = WithAnimated(ScrollView);
