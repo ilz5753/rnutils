@@ -11,7 +11,6 @@ export {
   ReTouchableHighlight,
   ReTouchableOpacity,
   ReView,
-  WithAnimated,
   numberPercentRegex,
   useCacheShareValue,
   useColorStyle,

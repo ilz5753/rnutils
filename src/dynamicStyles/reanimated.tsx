@@ -1,5 +1,5 @@
-import { isEqual, isFunction } from 'lodash';
-import React, { Component, useEffect, type ComponentType } from 'react';
+import { isEqual } from 'lodash';
+import { useEffect } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -21,7 +21,6 @@ import Animated, {
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
-  type AnimateProps,
   type DerivedValue,
   type SharedValue,
 } from 'react-native-reanimated';
@@ -640,29 +639,29 @@ export function useDimensionSizesStyle({
 }
 
 const $ = Animated.createAnimatedComponent;
-export function WithAnimated<T extends object>(Comp: ComponentType<T>) {
-  type RT = Readonly<AnimateProps<T>>;
-  class WAC extends Component<T> {
-    render = () => {
-      let C = Comp as any;
-      return <C {...this.props} />;
-    };
-  }
-  const AnimatedComponent = $(isFunction(Comp) ? WAC : Comp) as any;
-  class Res<T> extends Component<T> {
-    render = () => <AnimatedComponent {...this.props} />;
-  }
-  return Res<RT>;
-}
-export const ReView = WithAnimated(View);
-export const ReScrollView = WithAnimated(ScrollView);
-export const ReText = WithAnimated(Text);
-export const ReTextInput = WithAnimated(TextInput);
-export const ReImage = WithAnimated(Image);
-export const ReImageBackground = WithAnimated(ImageBackground);
-export const ReActivityIndicator = WithAnimated(ActivityIndicator);
-export const ReFlatList = WithAnimated(FlatList);
-export const ReSectionList = WithAnimated(SectionList);
-export const ReKeyboardAvoidingView = WithAnimated(KeyboardAvoidingView);
-export const ReTouchableOpacity = WithAnimated(TouchableOpacity);
-export const ReTouchableHighlight = WithAnimated(TouchableHighlight);
+// export function WithAnimated<T extends object>(Comp: ComponentType<T>) {
+//   type RT = Readonly<AnimateProps<T>>;
+//   class WAC extends Component<T> {
+//     render = () => {
+//       let C = Comp as any;
+//       return <C {...this.props} />;
+//     };
+//   }
+//   const AnimatedComponent = $(isFunction(Comp) ? WAC : Comp) as any;
+//   class Res<T> extends Component<T> {
+//     render = () => <AnimatedComponent {...this.props} />;
+//   }
+//   return Res<RT>;
+// }
+export const ReView = $(View);
+export const ReScrollView = $(ScrollView);
+export const ReText = $(Text);
+export const ReTextInput = $(TextInput);
+export const ReImage = $(Image);
+export const ReImageBackground = $(ImageBackground);
+export const ReActivityIndicator = $(ActivityIndicator);
+export const ReFlatList = $(FlatList);
+export const ReSectionList = $(SectionList);
+export const ReKeyboardAvoidingView = $(KeyboardAvoidingView);
+export const ReTouchableOpacity = $(TouchableOpacity);
+export const ReTouchableHighlight = $(TouchableHighlight);
