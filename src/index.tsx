@@ -1,3 +1,4 @@
+export { HexToRgba } from './constants';
 export {
   ReActivityIndicator,
   ReFlatList,
@@ -29,6 +30,8 @@ export type {
   StrNum,
   TWorkletFn,
 } from './dynamicStyles/reanimated';
+export { useScrollEvents } from './dynamicStyles/useScrollEvents';
+export { useVisibility } from './dynamicStyles/useVisibility';
 export {
   Layout,
   SquareLayout,
