@@ -1,6 +1,6 @@
 export { ScaleButton } from './components/ScaleButton';
 export type { TScaleButton } from './components/ScaleButton';
-export { HexToRgba } from './constants';
+export { FireEvents, HexToRgba, Multiplier } from './constants';
 export {
   ReActivityIndicator,
   ReFlatList,
