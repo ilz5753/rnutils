@@ -6,14 +6,14 @@ export const HexToRgba = (hex: string, alpha = 1) => {
   } catch (e) {}
   return hex;
 };
-type TFireEvent<T> = (...data: T[]) => void;
+type TFireEvent<T> = (value: T) => void;
 export function FireEvents<T>(
   mainEvent: TFireEvent<T>,
-  otherEvents: TFireEvent<never>[]
+  otherEvents: TFireEvent<T>[] = []
 ) {
-  return (...data: T[]) => {
-    mainEvent(...data);
-    for (let oe of otherEvents) oe();
+  return (value: T) => {
+    mainEvent(value);
+    for (let oe of otherEvents) oe(value);
   };
 }
 export const Multiplier = (first: number) => (second: number) => first * second;
