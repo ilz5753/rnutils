@@ -12,6 +12,8 @@ export type TScaleButton = AnimateProps<TouchableOpacityProps> & {
   duration?: number;
   toScale?: number;
 };
+let RV = ReView as any;
+let RT = ReTouchableOpacity as any;
 export function ScaleButton({
   toScale = 0.96,
   duration = 200,
@@ -36,8 +38,8 @@ export function ScaleButton({
     ],
   }));
   return (
-    <ReView style={[scaleAnimation]}>
-      <ReTouchableOpacity
+    <RV style={[scaleAnimation]}>
+      <RT
         {...{
           activeOpacity: activeOpacity ?? 0.69,
           onPressIn,
@@ -45,6 +47,6 @@ export function ScaleButton({
           ...rest,
         }}
       />
-    </ReView>
+    </RV>
   );
 }
