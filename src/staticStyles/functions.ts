@@ -556,11 +556,11 @@ export const f1 = flex(1);
 export const fw = width('100%');
 export const fh = height('100%');
 export const full = [fw, fh];
-
+export const transparent = 'transparent';
 export const center = getStyle(['aic', 'jcc']);
 export const row = getStyle('fdr');
 export const pa = getStyle('pa');
 export const overlay1 = [pa, zIndex(1)];
 export const overlayMax = [pa, zIndex(10e12)];
-export type { StyleKey };
 export { getStyle };
+export type { StyleKey };
