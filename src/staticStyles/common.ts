@@ -290,6 +290,15 @@ const CommonStyles = StyleSheet.create({
   ofsd: {
     objectFit: 'scale-down',
   },
+  fww: {
+    flexWrap: 'wrap',
+  },
+  fwnw: {
+    flexWrap: 'nowrap',
+  },
+  fwwr: {
+    flexWrap: 'wrap-reverse',
+  },
 });
 export type StyleKey = keyof typeof CommonStyles | boolean;
 export const getStyle = (keys?: StyleKey[] | StyleKey) => {
@@ -302,4 +311,3 @@ export const getStyle = (keys?: StyleKey[] | StyleKey) => {
     else exe(keys);
   return o;
 };
-
