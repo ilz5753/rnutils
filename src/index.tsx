@@ -1,6 +1,12 @@
 export { ScaleButton } from './components/ScaleButton';
 export type { TScaleButton } from './components/ScaleButton';
 export { FireEvents, HexToRgba, Multiplier } from './constants';
+export { RelationCreator } from './contexts/RelationCreator';
+export type {
+  IRelationCreator,
+  IRelationCreatorCtx,
+  TRefFns,
+} from './contexts/RelationCreator/type';
 export {
   ReActivityIndicator,
   ReFlatList,
