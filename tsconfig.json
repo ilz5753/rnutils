@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "rnutils": ["./src/index"]
+      "@ilz5753/rnutils": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

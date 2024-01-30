@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback } from 'react';
 import type { TouchableOpacityProps } from 'react-native';
 import {
   useAnimatedStyle,
@@ -22,18 +22,17 @@ export function ScaleButton({
   activeOpacity,
   ...rest
 }: TScaleButton) {
-  let time = useMemo(() => ({ duration }), [duration]);
   let scale = useSharedValue(1);
   let onPressIn = useCallback(() => {
-    scale.value = withTiming(toScale, time);
+    scale.value = toScale;
   }, []);
   let onPressOut = useCallback(() => {
-    scale.value = withTiming(1, time);
+    scale.value = 1;
   }, []);
   let scaleAnimation = useAnimatedStyle(() => ({
     transform: [
       {
-        scale: scale.value,
+        scale: withTiming(scale.value, { duration }),
       },
     ],
   }));

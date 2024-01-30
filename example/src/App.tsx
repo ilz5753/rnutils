@@ -11,7 +11,7 @@ import {
   ReText,
   color,
   fontSize,
-} from 'rnutils';
+} from '@ilz5753/rnutils';
 
 export default function App() {
   let [bg, setBg] = useState('red');

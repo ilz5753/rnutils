@@ -1,42 +1,76 @@
 import { isEqual } from 'lodash';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
-  FlatList,
-  Image,
   ImageBackground,
   KeyboardAvoidingView,
-  ScrollView,
+  Modal,
+  RefreshControl,
+  SafeAreaView,
   SectionList,
-  Text,
+  StatusBar,
+  Switch,
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
-  View,
   type ColorValue,
+  type ViewProps,
 } from 'react-native';
 import Animated, {
+  // FadeIn,
+  // FadeOut,
+  LinearTransition,
   interpolate,
   interpolateColor,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
+  type AnimatedProps,
   type DerivedValue,
   type SharedValue,
 } from 'react-native-reanimated';
+
+/**
+ * Represents a dimension value that can be either a number or a percentage string.
+ */
 export type CustomDimensionValue = number | `${number}%`;
+/**
+ * Represents a value that can be either a string or a number.
+ */
 export type StrNum = string | number;
+/**
+ * Represents a derived color value.
+ */
 export type DerivedColor = DerivedValue<ColorValue>;
+/**
+ * Represents a derived number value.
+ */
 export type DerivedNumber = DerivedValue<number>;
+/**
+ * Represents a derived dimension value.
+ */
 export type DerivedDimension = DerivedValue<CustomDimensionValue>;
+/**
+ * Represents a worklet function with a generic parameter type.
+ */
 export type TWorkletFn<T> = (...args: T[]) => T;
+/**
+ * Represents a set of shared values used for caching and sharing values in animations.
+ */
 export interface CacheShareValue<T> {
   progress: SharedValue<number>;
   inputRange: number[];
   previous: SharedValue<T>;
   current: SharedValue<T>;
 }
-export const numberPercentRegex = /^(\d+)%$/;
+/**
+ * Creates and returns a set of shared values for caching and sharing values in animations.
+ * @param value - The initial value.
+ * @param progressUpdaterWorklet - A worklet function for updating progress.
+ * @param min - The minimum value for progress.
+ * @param max - The maximum value for progress.
+ * @returns A CacheShareValue object.
+ */
 export function useCacheShareValue<T>(
   value: T,
   progressUpdaterWorklet?: TWorkletFn<number>,
@@ -63,6 +97,9 @@ export function useCacheShareValue<T>(
     current,
   };
 }
+/**
+ * Represents a set of styles related to color values.
+ */
 export function useColors(value: DerivedColor) {
   let backgroundColor = useAnimatedStyle(() => ({
     backgroundColor: value.value,
@@ -157,6 +194,9 @@ export function useColors(value: DerivedColor) {
     overlayColor,
   };
 }
+/**
+ * Represents a set of styles related to number values.
+ */
 export function useNumberSizes(value: DerivedNumber) {
   let flex = useAnimatedStyle(() => ({
     flex: value.value,
@@ -395,6 +435,9 @@ export function useNumberSizes(value: DerivedNumber) {
     elevation,
   };
 }
+/**
+ * Represents a set of styles related to dimension values.
+ */
 export function useDimensionSizes(value: DerivedDimension) {
   let top = useAnimatedStyle(() => ({
     top: value.value,
@@ -583,6 +626,9 @@ export function useDimensionSizes(value: DerivedDimension) {
     paddingNotEnd,
   };
 }
+/**
+ * Represents a set of styles related to color values using CacheShareValue.
+ */
 export function useColorStyle({
   previous,
   progress,
@@ -595,10 +641,13 @@ export function useColorStyle({
         previous.value,
         current.value,
       ]),
-    []
+    [inputRange]
   );
   return useColors(color);
 }
+/**
+ * Represents a set of styles related to number values using CacheShareValue.
+ */
 export function useNumberSizesStyle({
   previous,
   progress,
@@ -608,62 +657,107 @@ export function useNumberSizesStyle({
   let size = useDerivedValue(
     () =>
       interpolate(progress.value, inputRange, [previous.value, current.value]),
-    []
+    [inputRange]
   );
   return useNumberSizes(size);
 }
+/**
+ * Regular expression for matching percentage strings.
+ */
+export const numberPercentRegex = /^(\d+)%$/;
+/**
+ * Converts CustomDimensionValue to a number, handling percentage strings.
+ * @param cs - The {@link CustomDimensionValue} to convert.
+ * @returns The converted number value.
+ */
+export const ReFromCsToNumber = (cs: CustomDimensionValue): number => {
+  'worklet';
+  if (typeof cs === 'number') {
+    return cs;
+  } else if (numberPercentRegex.test(cs)) {
+    // If it's a percentage string, extract the number and convert it
+    return parseInt(cs.replace('%', ''), 10);
+  } else {
+    throw new Error(`Invalid CustomDimensionValue: ${cs}`);
+  }
+};
+/**
+ * Uses shared values to create dimension sizes styles with caching and sharing values in animations.
+ * @param param0 - CacheShareValue containing previous, progress, inputRange, and current values.
+ * @returns A set of styles related to dimension sizes.
+ */
 export function useDimensionSizesStyle({
   previous,
   progress,
   inputRange,
   current,
 }: CacheShareValue<CustomDimensionValue>) {
-  let size = useDerivedValue(() => {
-    let sp = `${previous.value}`;
-    let sc = `${current.value}`;
-    if (typeof previous.value === 'number' && typeof current.value === 'number')
-      return interpolate(progress.value, inputRange, [
-        previous.value,
-        current.value,
-      ]);
-    else if (numberPercentRegex.test(sp) && numberPercentRegex.test(sc)) {
-      let newPrevious = parseInt(sp.replace('%', ''));
-      let newCurrent = parseInt(sc.replace('%', ''));
-      return `${interpolate(progress.value, inputRange, [
-        newPrevious,
-        newCurrent,
-      ])}%`;
-    } else return 0;
-  }, []);
+  let size = useDerivedValue(
+    () =>
+      interpolate(progress.value, inputRange, [
+        ReFromCsToNumber(previous.value),
+        ReFromCsToNumber(current.value),
+      ]),
+    [inputRange]
+  );
   return useDimensionSizes(size as any);
 }
+/**
+ * Animated component creators using Reanimated library.
+ */
+export const Re = Animated.createAnimatedComponent;
 
-const $ = Animated.createAnimatedComponent;
-// export function WithAnimated<T extends object>(Comp: ComponentType<T>) {
-//   type RT = Readonly<AnimateProps<T>>;
-//   class WAC extends Component<T> {
-//     render = () => {
-//       let C = Comp as any;
-//       return <C {...this.props} />;
-//     };
-//   }
-//   const AnimatedComponent = $(isFunction(Comp) ? WAC : Comp) as any;
-//   class Res<T> extends Component<T> {
-//     render = () => <AnimatedComponent {...this.props} />;
-//   }
-//   return Res<RT>;
+// function HOC<T extends object>(Component: ComponentType<T>) {
+//   let Ac = Re(Component);
+//   return ({
+//     layout = LinearTransition,
+//     entering = FadeIn,
+//     exiting = FadeOut,
+//     ...props
+//   }: AnimatedProps<ViewProps>) => {
+//     return (
+//       <ReView
+//         {...{
+//           layout,
+//           entering,
+//           exiting,
+//           ...props,
+//         }}
+//       />
+//     );
+//   };
 // }
-export const ReView = $(View);
-export const ReScrollView = $(ScrollView);
-export const ReText = $(Text);
-export const ReTextInput = $(TextInput);
-export const ReImage = $(Image);
-export const ReImageBackground = $(ImageBackground);
-export const ReActivityIndicator = $(ActivityIndicator);
-export const ReFlatList = $(FlatList);
-export const ReSectionList = $(SectionList);
-export const ReKeyboardAvoidingView = $(KeyboardAvoidingView);
-export const ReTouchableOpacity = $(TouchableOpacity);
-export const ReTouchableHighlight = $(TouchableHighlight);
 
-
+export const ReView = Animated.View;
+export const ReScrollView = Animated.ScrollView;
+export const ReText = Animated.Text;
+export const ReTextInput = Re(TextInput);
+export const ReImage = Animated.Image;
+export const ReImageBackground = Re(ImageBackground);
+export const ReActivityIndicator = Re(ActivityIndicator);
+export const ReSectionList = Re(SectionList);
+export const ReKeyboardAvoidingView = Re(KeyboardAvoidingView);
+export const ReTouchableOpacity = Re(TouchableOpacity);
+export const ReTouchableHighlight = Re(TouchableHighlight);
+export const ReStatusBar = Re(StatusBar);
+export const ReModal = Re(Modal);
+export const ReSwitch = Re(Switch);
+export const ReRefreshControl = Re(RefreshControl);
+export const ReSafeAreaView = Re(SafeAreaView);
+export function ReWrapper({
+  layout = LinearTransition,
+  // entering = FadeIn,
+  // exiting = FadeOut,
+  ...props
+}: AnimatedProps<ViewProps>) {
+  return (
+    <ReView
+      {...{
+        layout,
+        // entering,
+        // exiting,
+        ...props,
+      }}
+    />
+  );
+}
