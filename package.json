@@ -1,6 +1,6 @@
 {
   "name": "@ilz5753/rnutils",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "React Native Utils",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -80,8 +80,12 @@
     "@types/react": "*"
   },
   "peerDependencies": {
+    "lodash": "*",
     "react": "*",
-    "react-native": "*"
+    "react-native": "*",
+    "react-native-gesture-handler": "*",
+    "react-native-reanimated": "*",
+    "react-native-svg": "*"
   },
   "workspaces": [
     "example"
@@ -165,8 +169,8 @@
   },
   "dependencies": {
     "lodash": "^4.17.21",
-    "react-native-gesture-handler": "^2.14.0",
-    "react-native-reanimated": "^3.6.0",
+    "react-native-gesture-handler": "^2.15.0",
+    "react-native-reanimated": "^3.7.1",
     "react-native-svg": "^14.1.0"
   }
 }

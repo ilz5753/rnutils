@@ -2,7 +2,7 @@ let hashtag = '#',
   // rgb = 'rgb',
   rgba = 'rgba';
 let and = (n = 0, via = 255) => n & via;
-export const HexToRgba = (hex: string, alpha = 1): string => {
+export const HexToRgba = (hex: string, alpha = 1) => {
   try {
     let copy = hex.replace(hashtag, '');
     let bigint = parseInt(copy, 16);

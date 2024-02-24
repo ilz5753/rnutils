@@ -2,17 +2,21 @@ import { isEqual } from 'lodash';
 import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
+  Image,
   ImageBackground,
   KeyboardAvoidingView,
   Modal,
   RefreshControl,
   SafeAreaView,
+  ScrollView,
   SectionList,
   StatusBar,
   Switch,
+  Text,
   TextInput,
   TouchableHighlight,
   TouchableOpacity,
+  View,
   type ColorValue,
   type ViewProps,
 } from 'react-native';
@@ -728,11 +732,11 @@ export const Re = Animated.createAnimatedComponent;
 //   };
 // }
 
-export const ReView = Animated.View;
-export const ReScrollView = Animated.ScrollView;
-export const ReText = Animated.Text;
+export const ReView = Re(View);
+export const ReScrollView = Re(ScrollView);
+export const ReText = Re(Text);
 export const ReTextInput = Re(TextInput);
-export const ReImage = Animated.Image;
+export const ReImage = Re(Image);
 export const ReImageBackground = Re(ImageBackground);
 export const ReActivityIndicator = Re(ActivityIndicator);
 export const ReSectionList = Re(SectionList);

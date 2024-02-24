@@ -26,7 +26,7 @@ export function ScaleButton({
   duration = 200,
   onPressIn: OI,
   onPressOut: OO,
-  activeOpacity,
+  activeOpacity = 0.69,
   ...rest
 }: IScaleButton) {
   let scale = useSharedValue(1);
@@ -55,7 +55,7 @@ export function ScaleButton({
     <RV style={[scaleAnimation]}>
       <RT
         {...{
-          activeOpacity: activeOpacity ?? 0.69,
+          activeOpacity,
           onPressIn,
           onPressOut,
           ...rest,
