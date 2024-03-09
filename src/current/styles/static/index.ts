@@ -1151,7 +1151,14 @@ export const fh = height('100%');
 export const full = [fw, fh];
 export const transparent = 'transparent';
 export const center = getStyle(['aic', 'jcc']);
-export const row = getStyle('fdr');
+export const row = (isRTL = false, spaceBetweenItems = 0) => [
+  getStyle([`fdr${isRTL ? 'r' : ''}`, `aic`]),
+  gap(spaceBetweenItems),
+];
+export const ta = (isRTL = false) => getStyle([`ta${isRTL ? 'r' : 'l'}`]);
+export function rtlComparer<T>(left: T, right: T) {
+  return (isRTL = false) => (isRTL ? right : left);
+}
 export const pa = getStyle('pa');
 export const overlay1 = [pa, zIndex(1)];
 export const overlayMax = [pa, zIndex(10e12)];

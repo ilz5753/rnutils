@@ -765,3 +765,16 @@ export function ReWrapper({
     />
   );
 }
+type AVP = AnimatedProps<ViewProps>;
+export interface AnimatedLayoutViewProps
+  extends Pick<AVP, 'entering' | 'exiting' | 'children' | 'style'> {}
+export function AnimatedLayoutView(props: AnimatedLayoutViewProps) {
+  return (
+    <ReView
+      {...{
+        layout: LinearTransition,
+        ...props,
+      }}
+    />
+  );
+}
